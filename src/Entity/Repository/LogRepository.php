@@ -26,7 +26,7 @@ class LogRepository extends EntityRepository
 
         $queryString = 'SELECT l.* FROM (
                     SELECT * FROM ruspanzer_logs WHERE class = :class AND object_id = :obj 
-                    UNION SELECT ruspanzer_logs.* FROM ruspanzer_logs JOIN ruspanzer_log_relations ON ruspanzer_logs.id = ruspanzer_log_relations.log_id 
+                    UNION ALL SELECT ruspanzer_logs.* FROM ruspanzer_logs JOIN ruspanzer_log_relations ON ruspanzer_logs.id = ruspanzer_log_relations.log_id 
                         WHERE ruspanzer_log_relations.class = :class AND ruspanzer_log_relations.object_id = :obj
                   ) l ORDER BY date';
 
