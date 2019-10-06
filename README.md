@@ -1,16 +1,16 @@
-##### Simple entity loggable bundle
+#### Simple entity loggable bundle
 
-###### How to use:
+##### How to use:
 
 1. Install bundle
-`compoer require ruspanzer/loggable-bundle`
+`composer require ruspanzer/loggable-bundle`
 2. Implement `Ruspanzer\LoggableBundle\Entity\Interfaces\LoggableInterface` for you entity
 3. If you need set relations between two loggable entities, use `getRelatedLogEntities` in related entity. 
 This method must be return array of `LoggableInterface` entities. 
 It will allow search related logs when searching main entity
 4. Find logs with repository method getByObject(). Or you can write your search implementation with pagination and other cool features :-)
 
-###### Example:
+##### Example:
 
 ```
 class Place implements LoggableInterface
@@ -67,5 +67,4 @@ class Address implements LoggableInterface
     }
 }
 ```
-
 If you will be search logs by Place, Address logs to be returned
