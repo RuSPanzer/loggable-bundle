@@ -68,3 +68,7 @@ class Address implements LoggableInterface
 }
 ```
 If you will be search logs by Place, Address logs to be returned
+
+This bundle also working with [StofDoctrineExtensions Softdeleteable][1]
+
+[1]: https://github.com/Atlantic18/DoctrineExtensions/blob/v2.4.x/doc/softdeleteable.md

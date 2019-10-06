@@ -152,7 +152,7 @@ class LoggableSubscriber implements EventSubscriber
         $meta = $em->getClassMetadata(get_class($entity));
         $oid = spl_object_hash($entity);
 
-        if (array_key_exists($oid, $this->handledOids[$oid])) {
+        if (array_key_exists($oid, $this->handledOids)) {
             return;
         }
         $this->handledOids[$oid] = true;
