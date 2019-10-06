@@ -1,7 +1,7 @@
 {
   "name": "ruspanzer/loggable-bundle",
   "description": "Doctrine simple loggable entities",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "symfony-bundle",
   "keywords": [
     "symfony",
