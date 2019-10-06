@@ -165,7 +165,7 @@ class LoggableSubscriber implements EventSubscriber
         $log = new Log();
         $log->setAction($action)
             ->setClass($meta->getName())
-            ->setUser($this->getUsername());
+            ->setUsername($this->getUsername());
 
         foreach ($changeSet as $field => $values) {
             if (Log::ACTION_CREATE !== $action) {

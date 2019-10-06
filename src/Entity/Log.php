@@ -37,7 +37,7 @@ class Log
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
-    private $user;
+    private $username;
 
     /**
      * @var DateTime|null
@@ -78,19 +78,19 @@ class Log
     /**
      * @return string|null
      */
-    public function getUser(): ?string
+    public function getUsername(): ?string
     {
-        return $this->user;
+        return $this->username;
     }
 
     /**
-     * @param string|null $user
+     * @param string|null $username
      *
      * @return Log
      */
-    public function setUser(?string $user): Log
+    public function setUsername(?string $username): Log
     {
-        $this->user = $user;
+        $this->username = $username;
 
         return $this;
     }
