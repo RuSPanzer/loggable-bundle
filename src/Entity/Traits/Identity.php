@@ -4,11 +4,6 @@ namespace Ruspanzer\LoggableBundle\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Trait Identity.
- *
- * @package Ruspanzer\LoggableBundle\Entity\Traits
- */
 trait Identity
 {
     /**
@@ -19,10 +14,7 @@ trait Identity
      */
     protected $id;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return (int) $this->id;
     }

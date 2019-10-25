@@ -8,5 +8,9 @@
             <argument type="service" id="security.token_storage" />
             <tag name="doctrine.event_subscriber" />
         </service>
+        <service id="Ruspanzer\LoggableBundle\EventListener\TablePrefixListener" public="false">
+            <argument/> <!-- will be filled in with table_prefix dynamically -->
+            <tag name="doctrine.event_listener" event="loadClassMetadata" />
+        </service>
     </services>
 </container>

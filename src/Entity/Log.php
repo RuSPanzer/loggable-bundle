@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ruspa
- * Date: 11.09.2018
- * Time: 21:19.
- */
 
 namespace Ruspanzer\LoggableBundle\Entity;
 
@@ -15,10 +9,8 @@ use Ruspanzer\LoggableBundle\Entity\Traits\Identity;
 use Ruspanzer\LoggableBundle\Entity\Traits\ObjectLog;
 
 /**
- * Class Log.
- *
  * @ORM\Entity(repositoryClass="Ruspanzer\LoggableBundle\Entity\Repository\LogRepository")
- * @ORM\Table(name="ruspanzer_logs", indexes={
+ * @ORM\Table(name="logs", indexes={
  *     @ORM\Index(name="logs_class_idx", columns={"class"}),
  *     @ORM\Index(name="logs_date_idx", columns={"date"}),
  *     @ORM\Index(name="logs_object_id_idx", columns={"object_id"}),
@@ -31,7 +23,8 @@ class Log
     const ACTION_UPDATE = 'update';
     const ACTION_REMOVE = 'remove';
 
-    use Identity, ObjectLog;
+    use Identity;
+    use ObjectLog;
 
     /**
      * @var string|null
@@ -58,7 +51,7 @@ class Log
     private $newData = [];
 
     /**
-     * @var
+     * @var ArrayCollection|LogRelatedEntity[]
      * @ORM\OneToMany(targetEntity="Ruspanzer\LoggableBundle\Entity\LogRelatedEntity", mappedBy="log", orphanRemoval=true, cascade={"all"})
      */
     private $relatedEntities;
@@ -71,92 +64,57 @@ class Log
 
     public function __construct()
     {
-        $this->date            = new DateTime();
+        $this->date = new DateTime();
         $this->relatedEntities = new ArrayCollection();
     }
 
-    /**
-     * @return string|null
-     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    /**
-     * @param string|null $username
-     *
-     * @return Log
-     */
-    public function setUsername(?string $username): Log
+    public function setUsername(?string $username): self
     {
         $this->username = $username;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getOldData(): array
     {
         return $this->oldData;
     }
 
-    /**
-     * @param array $oldData
-     *
-     * @return Log
-     */
-    public function setOldData(array $oldData): Log
+    public function setOldData(array $oldData): self
     {
         $this->oldData = $oldData;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getNewData(): array
     {
         return $this->newData;
     }
 
-    /**
-     * @param array $newData
-     *
-     * @return Log
-     */
-    public function setNewData(array $newData): Log
+    public function setNewData(array $newData): self
     {
         $this->newData = $newData;
 
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getDate(): ?DateTime
     {
         return $this->date;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAction(): ?string
     {
         return $this->action;
     }
 
-    /**
-     * @param string|null $action
-     *
-     * @return Log
-     */
-    public function setAction(?string $action): Log
+    public function setAction(?string $action): self
     {
         $this->action = $action;
 
@@ -168,7 +126,7 @@ class Log
         return $this->relatedEntities;
     }
 
-    public function addRelatedEntity(LogRelatedEntity $entity)
+    public function addRelatedEntity(LogRelatedEntity $entity): self
     {
         $entity->setLog($this);
         $this->relatedEntities->add($entity);
@@ -176,40 +134,34 @@ class Log
         return $this;
     }
 
-    public function removeRelatedEntity(LogRelatedEntity $entity)
+    public function removeRelatedEntity(LogRelatedEntity $entity): self
     {
         $this->relatedEntities->removeElement($entity);
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getDataRowCount(): int
     {
         return max(count($this->getOldData()), count($this->getNewData()));
     }
 
-    public function isActionCreate()
+    public function isActionCreate(): bool
     {
         return self::ACTION_CREATE === $this->getAction();
     }
 
-    public function isActionUpdate()
+    public function isActionUpdate(): bool
     {
         return self::ACTION_UPDATE === $this->getAction();
     }
 
-    public function isActionRemove()
+    public function isActionRemove(): bool
     {
         return self::ACTION_REMOVE === $this->getAction();
     }
 
-    /**
-     * @return array
-     */
-    public function getDataFields()
+    public function getDataFields(): array
     {
         return count($this->getOldData()) ? array_keys($this->getOldData()) : array_keys($this->getNewData());
     }
