@@ -2,6 +2,7 @@
 
 namespace Ruspanzer\LoggableBundle\EventListener;
 
+use Ruspanzer\LoggableBundle\Event\CreateLogEvent;
 use Serializable;
 use JsonSerializable;
 use Doctrine\ORM\Events;
@@ -13,6 +14,7 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 use Ruspanzer\LoggableBundle\Entity\Log;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Ruspanzer\LoggableBundle\Entity\LogRelatedEntity;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Ruspanzer\LoggableBundle\Entity\Interfaces\LoggableInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -28,10 +30,12 @@ class LoggableSubscriber implements EventSubscriber
     protected $manyToManyData = [];
 
     private $handledOids = [];
+    private $eventDispatcher;
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher)
     {
         $this->tokenStorage = $tokenStorage;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -193,6 +197,9 @@ class LoggableSubscriber implements EventSubscriber
             }
             $log->addRelatedEntity($relatedLog);
         }
+
+        /* @var CreateLogEvent $event */
+        $this->eventDispatcher->dispatch(new CreateLogEvent($log));
 
         $em->persist($log);
         $em->getUnitOfWork()->computeChangeSet($em->getClassMetadata(Log::class), $log);

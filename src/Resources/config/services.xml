@@ -6,13 +6,15 @@
     <services>
         <service id="Ruspanzer\LoggableBundle\EventListener\LoggableSubscriber" public="false">
             <argument type="service" id="security.token_storage" />
+            <argument type="service" id="event_dispatcher" />
             <tag name="doctrine.event_subscriber" />
         </service>
         <service id="Ruspanzer\LoggableBundle\EventListener\TablePrefixListener" public="false">
             <argument/> <!-- will be filled in with table_prefix dynamically -->
             <tag name="doctrine.event_listener" event="loadClassMetadata" />
         </service>
-        <service id="Ruspanzer\LoggableBundle\Entity\Repository\LogRepository" public="false" autowire="true">
+        <service id="Ruspanzer\LoggableBundle\Entity\Repository\LogRepository" public="false">
+            <argument type="service" id="doctrine" />
             <tag name="doctrine.repository_service"/>
         </service>
     </services>
