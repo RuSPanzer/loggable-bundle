@@ -198,7 +198,6 @@ class LoggableSubscriber implements EventSubscriber
             $log->addRelatedEntity($relatedLog);
         }
 
-        /* @var CreateLogEvent $event */
         $this->eventDispatcher->dispatch(new CreateLogEvent($log));
 
         $em->persist($log);
