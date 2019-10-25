@@ -12,5 +12,8 @@
             <argument/> <!-- will be filled in with table_prefix dynamically -->
             <tag name="doctrine.event_listener" event="loadClassMetadata" />
         </service>
+        <service id="Ruspanzer\LoggableBundle\Entity\Repository\LogRepository" public="false" autowire="true">
+            <tag name="doctrine.repository_service"/>
+        </service>
     </services>
 </container>
