@@ -4,7 +4,7 @@ namespace Ruspanzer\LoggableBundle\Entity\Interfaces;
 
 interface LoggableInterface
 {
-    public function getId(): int;
+    public function getId(): ?int;
 
     /**
      * @return LoggableInterface[]

@@ -5,6 +5,7 @@ namespace Ruspanzer\LoggableBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Ruspanzer\LoggableBundle\Entity\Traits\ExtraDataTrait;
 use Ruspanzer\LoggableBundle\Entity\Traits\Identity;
 use Ruspanzer\LoggableBundle\Entity\Traits\ObjectLog;
 
@@ -25,6 +26,7 @@ class Log
 
     use Identity;
     use ObjectLog;
+    use ExtraDataTrait;
 
     /**
      * @var string|null
