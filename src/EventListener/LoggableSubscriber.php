@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ruspa
- * Date: 11.09.2018
- * Time: 21:17.
- */
 
 namespace Ruspanzer\LoggableBundle\EventListener;
 
@@ -23,10 +17,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Ruspanzer\LoggableBundle\Entity\Interfaces\LoggableInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-/**
- * Class LoggableSubscriber
- * @package Ruspanzer\LoggableBundle\EventListener
- */
 class LoggableSubscriber implements EventSubscriber
 {
     private $tokenStorage;
@@ -39,19 +29,12 @@ class LoggableSubscriber implements EventSubscriber
 
     private $handledOids = [];
 
-    /**
-     * LoggableSubscriber constructor.
-     *
-     * @param TokenStorageInterface $tokenStorage
-     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
     }
 
     /**
-     * Returns an array of events this subscriber wants to listen to.
-     *
      * @return string[]
      */
     public function getSubscribedEvents()
@@ -225,8 +208,7 @@ class LoggableSubscriber implements EventSubscriber
         string $field,
         $value,
         Log $log
-    )
-    {
+    ) {
         if (!$value) {
             return null;
         }
@@ -236,7 +218,7 @@ class LoggableSubscriber implements EventSubscriber
                 if ($value instanceof JsonSerializable) {
                     return $value->jsonSerialize();
                 } elseif (method_exists($value, '__toString')) {
-                    return (string)$value;
+                    return (string) $value;
                 } elseif ($value instanceof Serializable) {
                     return serialize($value);
                 }
@@ -263,9 +245,6 @@ class LoggableSubscriber implements EventSubscriber
     }
 
     /**
-     * @param ClassMetadata $classMetadata
-     * @param $object
-     *
      * @return int|string|null
      */
     private function getId(ClassMetadata $classMetadata, $object)
@@ -277,10 +256,10 @@ class LoggableSubscriber implements EventSubscriber
 
         $id = reset($identifiers);
 
-        return is_numeric($id) ? (int)$id : $id;
+        return is_numeric($id) ? (int) $id : $id;
     }
 
-    private function getUsername()
+    private function getUsername(): ?string
     {
         if (!$token = $this->tokenStorage->getToken()) {
             return null;

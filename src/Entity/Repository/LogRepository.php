@@ -11,15 +11,13 @@ class LogRepository extends EntityRepository
 {
     /**
      * Search by native sql, because mysql don't use two index by different tables in OR expression
-     * And doctrine don't support UNION query(
+     * And doctrine don't support UNION query(.
      *
      * here need write a pagination
      *
-     * @param LoggableInterface $loggable
-     *
      * @return Log[]
      */
-    public function getByObject(LoggableInterface $loggable)
+    public function getByObject(LoggableInterface $loggable): array
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata(Log::class, 'l');
@@ -34,7 +32,7 @@ class LogRepository extends EntityRepository
             ->createNativeQuery($queryString, $rsm)
             ->setParameters([
                 'class' => get_class($loggable),
-                'obj'   => $loggable->getId(),
+                'obj' => $loggable->getId(),
             ]);
 
         return $query->getResult();
